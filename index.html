@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Alruwaili</title>
+    <style>
+        body {
+            font-family: Cambria, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #222222;
+        }
+
+        .container {
+            width: 50%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #191919;
+            color: #74B2BF;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #74B2BF 3px solid;
+            font-size: 26px;
+        }
+
+        header a {
+            color: #74B2BF;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 26px;
+        }
+
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        header li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+
+        .main {
+            padding: 36px;
+            background: #191919;
+            margin-top: 0px;
+            font-size: 16px;
+            font-size: 19px;
+        }
+
+        .section-title {
+            color: #CBCBCB;
+            border-bottom: 2px solid #74B2BF;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section-content {
+            margin-bottom: 20px;
+            color: #CBCBCB;
+        }
+
+        .section-content h3 {
+            margin: 0;
+            padding: 0;
+            color: #CBCBCB;
+        }
+
+        .section-content p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <button onclick="window.location.href='Game/App_Executable.html'">Go to Another Page</button> -->
+    <header>
+        <div class="container">
+            <h1>Mohammad Alruwaili</h1>
+            <ul>
+                <li><a href="#" onclick="window.location.href='index.html'">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container main">
+        <section>
+            <h2 class="section-title">Profile</h2>
+            <div class="section-content">
+                <p>A skilled and experienced C++ programmer with over 5 years of experience in developing, testing, and debugging various
+                software applications and systems. Proficient in several programming languages such as C++, C, C#, Lua.
+                Able to work independently or as part of a team, communicate effectively and deliver high-quality results within
+                deadlines. I am familiar with the latest in bleeding edge software technologies, architecture, and design.</p>
+            </div>
+        </section>
+        <section>
+            <h2 class="section-title">Projects</h2>
+            <div class="section-content">
+                <h3><a href="#" onclick="window.location.href='Game/App_Executable.html'">Page Engine</a></h3>
+                <p>A native graphics engine in C++ that can render arbitrary 3D/2D graphics on all modern platforms
+                    Desktop/Mobile/Web.</p>
+            </div>
+            <div class="section-content">
+                <h3><a href="#" onclick="window.location.href='Game/App_Executable.html'">Page ECS</a></h3>
+                <p>A hot reloadable registry system with support for data retention. Reloading of DLLs and SOs works by implicitly recognizing
+                    it's unique entities and user custom defined components using a little bit of C++ magic.</p>
+            </div>
+            <div class="section-content">
+                <h3><a href="#" onclick="window.location.href='Game/App_Executable.html'">Idle Breakout: A Sample Game</a></h3>
+                <p>A simple game demo, made in C++ from scratch, compiled to WASM using Emscripten.</p>
+            </div>
+        </section>
+        <section>
+            <h2 class="section-title">Skills</h2>
+            <div class="section-content">
+                <p>Advanced C++, metaprogramming, multiplatform targetting</p>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
