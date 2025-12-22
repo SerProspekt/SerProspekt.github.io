@@ -125,6 +125,13 @@ footer a:hover {
     text-decoration: underline;
 }
 
+footer p {
+
+    margin-top: 0%;
+    margin-bottom: 0%;
+    /* adjust this value */
+}
+
 .scrollable-code {
     overflow-x: auto;
     /* Adds a horizontal scrollbar if the content overflows the container's width */
