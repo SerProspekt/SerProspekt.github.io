@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Alruwaili</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/tokyo-night-dark.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script> hljs.highlightAll(); </script>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Mohammad Alruwaili</h1>
+            <ul>
+                <li><a href="#" onclick="window.location.href='../index.html'">Home</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container main">
+        <section>
+            <h2 class="section-title">Page Engine</h2>
+            <div class="section-content">
+                <P>Built on top of <strong>PageECS</strong>, Page Engine is a C++ Visual-Editor/Runtime. Can be built as a full editor or as a standalone runtime. Page's standout feature is that it's completely hot reloadable, everything can be reloaded during runtime e.g.
+                    Textures, Audio, Shaders and even C++</p>
+                <video width="100%" height="100%" autoplay muted loop controls>
+                    <source src="/res/CReload.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <p>Now this is a showcase of your standard run-of-the-mill entry points. Reloading a DLL that captures these functions
+                    isn't that hard. Simply export these function in C avoiding name-mangling. And use them in your executable after
+                    loading the DLL. PAGE_ONLY_EXPORT is the ubiqitous DLL exporting macro</p>
+                
+                <p>Where <strong>PageECS</strong> shines is how it manages components, it uses <strong>PageRegistry</strong> which is a Container agnostic registrar that
+                    registers and deregisters, orders and retrieves your data between DLLs.
+                    This is also what <strong>AssetManager</strong> uses to safely retrieve Entities between DLLs.</p>
+
+                <p>A lot of these systems are worth talking about in detail as they solve minor issues that get lost in the bigger picture, such as identifying loaded DLLs,
+                    managing/clearing DLL specific data, support for custom containers, identifying user components, handling existing assets between DLLs
+                    (Overwriting/Retrieval)... etc, I'll reserve talking about these to keep this as conscise as possible.</p>
+
+                <p><strong>PageECS</strong> has support for systems and a modern ECS architecture. But in <strong>Page</strong> it's mostly used as a classical
+                    Component system (memory friendly, no inheritence)</p>
+
+                <pre class="scrollable-code">
+<code class="language-cpp">
+struct ExampleComponent
+{
+    // Components have built-in functions/members that get called/populated by engine if added by user.
+    // Bare in mind that none of these are required.
+
+    Entity&lt;ChunkArray&gt; Owner; // Gets populated when the component is added to an Entity.
+    
+    // The naming convention here is mixed and will be revised it's on the TODO
+    // PropertyInit -> OnPropertyInit etc...
+
+    void PropertyInit()       {} // Called as soon as component is added to an Entity.
+    void Init()               {} // Called after PropertyInit.
+    void OnEnable()           {} // If component is set enabled this will be called instantly.
+    void OnDisable()          {} // If component is set disabled this will be called instantly.
+    void Start()              {} // Called the frame after the component is added.
+    void OnEnableNextFrame()  {} // If component is set enabled this will be called the frame after.
+    void OnDisableNextFrame() {} // If component is set Disabled this will be called the frame after.
+    void PreUpdate()          {} // Called every frame before Update.
+    void Update()             {} // Called every frame.
+    void PostUpdate()         {} // Called every frame after Update.
+    void OnDestruction()      {} // Called instantly when component is removed.
+    void OnFinalize()         {} // Called the frame after the component is removed.
+};
+                </code>
+</pre>
+
+                <P>Components are safely managed between DLLs and can be reloaded. This can be useful by itself but really a perfect use case for it, is in a visual editor, such as a game engine.</P>
+
+                <p>A common visual tool provided by game engines is a property field, such as Unreal's UPROPERTY.</P>
+                
+                <P><strong>Page</strong> has built-in support for member properties and lambda properties i.e.
+                defining custom getters/setters as functions, Both of these properties are built in and can be automatically serialized/deserialized for the Editor/Runtime when saving/loading scenes.
+                This is what all of the components use to control parameters such as the Color in <strong>SpriteComponent</strong> and Position/Scale/Rotation in <strong>Transform</strong> component, etc.
+                Again I don't want to go too much into the weeds with this, as this is an involved detail of the engine, thankfully demonstrating it is easy</P>
+                
+                <pre class="scrollable-code">
+<code class="language-cpp">
+struct ExampleComponent
+{
+    Entity&lt;ChunkArray&gt; Owner;
+
+    int ExampleInt;
+    bool ExampleBool;
+
+    void PropertyInit()
+    {
+        PAGE_SCRIPT(); // Editor specific init macro, auto registers component as an editor component (Only required if you want to add this component via editor)
+
+        // The aforementioned magical properties (naming convention here is subject to change... Along with verbose overloads)
+
+        // -- Member Properties ---------------------------
+
+        // type is automatically known All PODs are built in.
+
+        CUSTOM_PROPERTY_INIT("int", ExampleInt);
+        CUSTOM_PROPERTY_INIT("bool", ExampleBool);
+
+        // -- Magical Lambda Properties -------------------
+
+        // capturing "this" is safe because underlying ECS container is ref safe.
+
+        CUSTOM_PROPERTY_INIT_LAMBDA("Lambda int",
+            [this]() { return ExampleInt; }, // getter you give me a valid type return
+            [this](int newVal) { ExampleInt = newVal; }
+        );
+        CUSTOM_PROPERTY_INIT_LAMBDA("Lambda bool",
+            [this]() { return ExampleBool; },
+            [this](bool newVal) { ExampleBool = newVal; }
+        );
+
+        static std::string StrLambda = "Magic";
+        CUSTOM_PROPERTY_INIT_LAMBDA("Lambda Magic",
+            []() { return StrLambda; },
+            [](const std::string&amp; newVal) { StrLambda = newVal; }
+        );
+
+        // ------------------------------------------------
+
+        /*
+        The many overloads:
+            DRAWLESS_CUSTOM_PROPERTY_INIT       (Member/Lambda)          Not visual in editor, this is purely for serialization purposes.
+            CUSTOM_PROPERTY_INIT_LAMBDA_GETTER  (Lambda)                 Getter only.
+            POST_                               (Member/Lambda/Drawless) Deserialize post Init function.
+            _LIMIT                              (Member/Lambda)          Adds a limit to numericals.
+        */
+    }
+};
+                </code>
+</pre>
+
+                <video width="100%" height="100%" autoplay muted loop controls>
+                    <source src="/res/PropertiesExample.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <p>Tools like these paired with C++ the limits can get really really absurd. You end up with something magical</p>
+                <pre class="scrollable-code">
+<code class="language-cpp">                    
+AssetManager::Add&lt;Callback&lt;void, Button&amp;&gt;&gt;("ChangeColor",
+    [](Button&amp; button)
+    {
+        button.ButtonSprite.GetComponent&lt;SpriteComponent&gt;().SetColor({ Random::Float(), Random::Float(), Random::Float(), 1.0f });
+    });
+                </code>
+</pre>
+                <p>Ever considered lighweight visual scripting with C++</p>
+
+                <video width="100%" height="100%" autoplay muted loop controls>
+                    <source src="/res/ButtonReload.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <p>You got yourself a dynamic visual C++ scripting langauge that is reloadable Node-RED style.
+                    More of a proof of concept at the moment. Obviously UI should be a selector which goes through all provided Callback functions,
+                    for now this'll do for the demo.
+                    More importantly the building blocks are there, if there ever was a desire. </p>
+
+            </div>
+    </div>
+</body>
+
+</html>

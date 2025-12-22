@@ -1,0 +1,111 @@
+body {
+    font-family: Cambria, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #191919;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: #191919;
+    color: #74B2BF;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #74B2BF 3px solid;
+    font-size: 30px;text-align: center;
+}
+
+header a {
+    color: #74B2BF;
+    text-decoration: none;
+    text-transform: low;
+    font-size: 52px;
+}
+
+header ul {
+    padding: 0;
+    list-style: none;
+}
+
+header li {
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+.main {
+    padding: 1.5%;
+    background: #191919;
+    margin-top: 0px;
+    font-size: 160%;
+    width: 50%;
+}
+
+.section-title {
+    color: #CBCBCB;
+    border-bottom: 2px solid #74B2BF;
+    font-size: 200%;
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+}
+
+.section-content {
+    padding-top: 1%;
+    padding-bottom: 1.5%;
+    margin-bottom: 1%;
+    color: #CBCBCB;
+}
+
+.section-content h3 {
+    margin: 0;
+    padding: 0;
+    color: #CBCBCB;
+}
+
+.section-content p {
+    margin: 1% 0;
+}
+
+a:link {
+    color: #74B2BF;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #74B2BF;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #74B2BF;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #74B2BF;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+p {
+    padding-bottom: 2.5%;
+}
+p + p {
+    padding-bottom: 5%;
+}
+
+.scrollable-code {
+    overflow-x: auto;
+    /* Adds a horizontal scrollbar if the content overflows the container's width */
+    white-space: pre;
+    /* Preserves whitespace and prevents automatic line breaks */
+    word-wrap: normal;
+    /* Ensures normal word wrapping behavior if it were to wrap */
+}
