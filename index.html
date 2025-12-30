@@ -17,7 +17,30 @@
     </header>
     <div class="container main">
         <section>
-            <h2 class="section-title">Projects</h2>
+            <h2 class="section-title">Introduction</h2>
+            <div class="section-content">
+                I started programming several years ago with my father. He is a retired Aramco Electrical Engineer/Computer Programmer. He introduced me to programming, we programmed an AC remote controller/temperature sensing device using an Arduino based micro controller ESP 8266.
+                The langauge we used was C++ using the Arduino IDE. Since then I fell in love with programming. I wrote a several C# programs before moving to C++ where I decided to develop my own game. On my way to devoloping my game I had to develop several tools namely
+                a game engine and all of what it entails (Registry System, ECS, Asset Manager, Renderer, Editor... etc) As with any good piece of software the work never ends, so I decided to document my progress to showcase every tool I develop until I finish my game.
+            </div>
+
+            <h2 class="section-title">Projects/Tools</h2>
+
+            <div class="section-content">
+                <h3><a href="#" onclick="window.location.href='/Projects/PageRegistry.html'">Page Registry</a></h3>
+                <p>The absolute core of the Page framework, this is the tool that manages all of Page's data, it insures safety across DLL/SO boundries. It is also container agnostic meaning user can provide his own container for managing data.</p>
+            </div>
+
+            <div class="section-content">
+                <h3><a href="#" onclick="window.location.href='/Projects/PageECS.html'">Page ECS</a></h3>
+                <p>An extremely flexible ECS, supports modern systems application design and also the classical OOP design.</p>
+            </div>
+
+            <div class="section-content">
+                <h3><a href="#" onclick="window.location.href='/Projects/PageEditor.html'">Page Editor</a></h3>
+                <p>Built using the excellent ImGui, a run-of-the-mill editor at the moment in all but Page's greatest utility the PropertyManager, a powerful tool that allows the user to control aspects of components visually, it's simplicity belies a sophisticated highly extensible implementation.</p>
+            </div>
+            
             <div class="section-content">
                 <h3><a href="#" onclick="window.location.href='/Projects/PageEngine.html'">Page Engine</a></h3>
                 <p>A completely reloadable native graphics engine written in C++ that can render arbitrary graphics on all modern platforms
@@ -25,7 +48,7 @@
             </div>
             <div class="section-content">
                 <h3><a href="#" onclick="window.location.href='/Game/App_Executable.html'">Idle Breakout</a></h3>
-                <p>A simple game demo, made in C++ from scratch, compiled to WASM using Emscripten.</p>
+                <p>A simple game, made in C++ from scratch (no engine) compiled to WASM using Emscripten.</p>
             </div>
         </section>
     </div>

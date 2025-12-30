@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Alruwaili</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/tokyo-night-dark.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script> hljs.highlightAll(); </script>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>
+                <li><a href="#" onclick="window.location.href='/index.html'">Mohammad Alruwaili</a></li>
+            </h1>
+        </div>
+    </header>
+
+    <div class="container main">
+        <section>
+            <h2 class="section-title">Page Editor</h2>
+            <div class="section-content">
+
+                <p>Built using ImGui, the real showcase feature worth talking about is the PropertyManager,</p>
+                <p>
+                    Properties are a common visual tool provided by editors. A property can be used to setup a component's... properties.
+                    A real world use case is the best way to understand them.
+                </p>
+
+                <p>
+                    Abstractly, before we get to the code let us write a custom component, a Text-component for example. What property would it have?
+                </p>
+
+                <p>
+                    <strong>A Text property.</strong>
+                </P>
+
+                <p>
+                    With Page's Property system, all you'd really need to provide is the string variable. Or for a more flexible design you could use the magical lambda property, more on it later.
+                </p>
+                
+                <pre class="scrollable-code">
+<code class="language-cpp">
+struct TextComponent
+{
+    Entity&lt;ChunkArray&gt; Owner;
+
+    std::string m_Text = "Hello World"; // our string variable
+
+    void PropertyInit()
+    {
+        PAGE_SCRIPT();
+        
+        // Our property
+        CUSTOM_PROPERTY_INIT("Text", m_Text); // this is it.
+    }
+};
+</code>
+                </pre>
+
+                <img src="/res/TextComponent_Added.png" alt="Added TextComponent." width="100%" height="100%">
+
+                <P>Obviously the logic for what to do with the text you'll have to provide.</P>
+
+                <P>A prebuilt component that also has a color and font properties already exist in Page named FontComponent, which also handles font rendering logic. Both properties are added same as before CUSTOM_PROPERTY_INIT nothing special about them. (Color is just a vec4 wrapper)</P>
+
+                <img src="/res/FontComponent_Added.png" alt="Added FontComponent." width="100%" height="100%">
+                    
+                <P>
+                    <strong>Page</strong> has built-in support for member properties and lambda properties i.e.
+                    defining custom getters/setters as functions, Both of these property types are built in and can be automatically
+                    serialized/deserialized for the Editor/Runtime when saving/loading scenes.
+                    This is what all of the components use to control parameters such as Position/Scale/Rotation in <strong>Transform</strong> component, etc.
+                </P>
+
+                
+
+                <pre class="scrollable-code">
+<code class="language-cpp">
+struct ExampleComponent
+{
+    Entity&lt;ChunkArray&gt; Owner;
+
+    int ExampleInt;
+    bool ExampleBool;
+
+    void PropertyInit()
+    {
+        PAGE_SCRIPT(); // Editor specific init macro, auto registers component as an editor component (Only required if you want to add this component via editor)
+
+        // -- Member Properties ---------------------------
+
+        // type is automatically known All PODs + special objects such as Color, string and vec2, vec3, vec4... etc are built in.
+
+        CUSTOM_PROPERTY_INIT("int", ExampleInt);
+        CUSTOM_PROPERTY_INIT("bool", ExampleBool);
+
+        // -- Magical Lambda Properties -------------------
+
+        // capturing "this" is safe because underlying ECS container is ref safe.
+
+        CUSTOM_PROPERTY_INIT_LAMBDA("Lambda int",
+            [this]() { return ExampleInt; }, // getter you give me a valid type return
+            [this](int newVal) { ExampleInt = newVal; }
+        );
+        CUSTOM_PROPERTY_INIT_LAMBDA("Lambda bool",
+            [this]() { return ExampleBool; },
+            [this](bool newVal) { ExampleBool = newVal; }
+        );
+
+        static std::string StrLambda = "Magic";
+        CUSTOM_PROPERTY_INIT_LAMBDA("Lambda Magic",
+            []() { return StrLambda; },
+            [](const std::string&amp; newVal) { StrLambda = newVal; }
+        );
+
+        // ------------------------------------------------
+
+        /*
+        The many overloads:
+            DRAWLESS_CUSTOM_PROPERTY_INIT       (Member/Lambda)          Not visual in editor, this is purely for serialization purposes.
+            CUSTOM_PROPERTY_INIT_LAMBDA_GETTER  (Lambda)                 Getter only.
+            POST_                               (Member/Lambda/Drawless) Deserialize post Init function.
+            _LIMIT                              (Member/Lambda)          Adds a limit to numericals.
+        */
+    }
+};
+                </code>
+</pre>
+
+                <p>Lambda/Member properties should pretty much cover all possible use cases, however if you ever needed something more Page does provide IProperty interface for infinite extensibility.</p>
+                <p>With C++ hot reloading, this creates a killer combo, Fast iteration, excellent performance.</p>
+
+            </div>
+        </section>
+    </div>
+
+</body>
