@@ -41,7 +41,7 @@
                 </P>
 
                 <p>
-                    With Page's Property system, all you'd really need to provide is the string variable. Or for a more flexible design you could use the magical lambda property, more on it later.
+                    With Page's property system, all you'd really need to provide is the string variable. Or for a more flexible design you could use the magical lambda property, more on it later.
                 </p>
                 
                 <pre class="scrollable-code">
@@ -65,14 +65,14 @@ struct TextComponent
 
                 <img src="/res/TextComponent_Added.png" alt="Added TextComponent." width="100%" height="100%">
 
-                <P>Obviously the logic for what to do with the text you'll have to provide.</P>
+                <P>Obviously, the logic for what to do with the text you'll have to provide.</P>
 
-                <P>A prebuilt component that also has a color and font properties already exist in Page named FontComponent, which also handles font rendering logic. Both properties are added same as before CUSTOM_PROPERTY_INIT nothing special about them. (Color is just a vec4 wrapper)</P>
+                <P>A prebuilt component that also has color and font properties already exists in Page named FontComponent, which also handles font rendering logic. Both properties are added same as before "CUSTOM_PROPERTY_INIT" nothing special about them. (Color is just a vec4 wrapper)</P>
 
                 <img src="/res/FontComponent_Added.png" alt="Added FontComponent." width="100%" height="100%">
                     
                 <P>
-                    <strong>Page</strong> has built-in support for member properties and lambda properties i.e.
+                    <span class="tooltip"><u>Page</u><span class="tooltip-text">A completely reloadable native graphics engine written in C++ that can render arbitrary graphics on all modern platforms: Desktop/Mobile/Web.</span></span> has built-in support for member properties and lambda properties i.e.
                     defining custom getters/setters as functions, Both of these property types are built in and can be automatically
                     serialized/deserialized for the Editor/Runtime when saving/loading scenes.
                     This is what all of the components use to control parameters such as Position/Scale/Rotation in <strong>Transform</strong> component, etc.
@@ -134,7 +134,7 @@ struct ExampleComponent
 </pre>
 
                 <p>Lambda/Member properties should pretty much cover all possible use cases, however if you ever needed something more Page does provide IProperty interface for infinite extensibility.</p>
-                <p>With C++ hot reloading, this creates a killer combo, Fast iteration, excellent performance.</p>
+                <p>With C++ hot reloading, this creates a terrific combo: Fast iteration, excellent performance.</p>
 
             </div>
         </section>

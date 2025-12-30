@@ -27,17 +27,17 @@
             <div class="section-content">
 
                 <p>
-                    PageRegistry fundementally is a data manager and a type identifier; The data it manages is data shared between DLLs. It's hyper-fast, as bare as it gets, it can act as a forwarder for custom containers for frictionless container swapping
-                    to manage the data how you'd like. Type identifying works simply by providing IDs for each DLL and every type registered, so you can query and retrieve type info i.e. rudimantary reflection (very fast no RTTI)
-                    everything is automated, user only has to add/get/remove items from the registry.
-                    PageRegistry also provides template functor callbacks a 0-cost-abstraction OnRegister/OnDeregister/OnReorder/OnReset.
+                    PageRegistry fundamentally is a data manager and a type identifier; The data it manages is data shared between DLLs. It's hyper-fast, as bare as it gets, it can act as a forwarder for custom containers for frictionless container swapping
+                    to manage the data however you'd like. Type identifying works simply by providing IDs for each DLL and every type registered, so you can query and retrieve type info i.e. rudimentary reflection (very fast no RTTI).
+                    Everything is automated, the user only has to add/get/remove items from the registry.
+                    PageRegistry also provides template functor callbacks, a zero-cost-abstraction OnRegister/OnDeregister/OnReorder/OnReset.
                 </p>
 
                 <P>Now if you can register/deregister types, the only logical next step would be DLL reloading.</P>
                 <P>
                     PageRegistry is built for this, it automatically figures out types registered to specific DLLs and unloads them when the DLL gets removed (This can be disabled for full manual control)
-                    The automated nature of PageRegistry is a core principle of Page. Types are automatically registered aswell when used. There is no manual registration required.
-                    This is achieved with highly escoteric C++ tricks allowing for all of this, some real black magic, template madness, C++ obscure trickery and plain old function pointers.
+                    The automated nature of PageRegistry is a core principle of Page. Types are automatically registered as well when used. There is no manual registration required.
+                    This is achieved with highly esoteric C++ tricks allowing for all of this, template madness, C++ obscure trickery and plain old function pointers.
                 </P>
             </div>
         </section>

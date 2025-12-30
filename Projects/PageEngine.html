@@ -24,27 +24,49 @@
         <section>
             <h2 class="section-title">Page Engine</h2>
             <div class="section-content">
-                <P>Built on top of <strong>PageECS</strong>, Page Engine is a C++ Visual-Editor/Runtime. Can be built as a full editor or as a standalone runtime. Page's standout feature is that it's completely hot reloadable, everything can be reloaded during runtime e.g.
-                    Textures, Audio, Shaders and even C++</p>
+                <p>Built on top of <span class="tooltip"><u>PageECS</u><span class="tooltip-text">An extremely flexible ECS, which supports modern systems application design and also the classical OOP design.</span></span>, Page Engine is a C++ Visual-Editor/Runtime. </p>
+
+                Features:
+                <ul>
+                    <li>Full editor or a standalone runtime</li>
+                    <li>C++ scripting</li>
+                    <li>DLL/SO specialized Utils</li>
+                    <li>Container agnostic registry system</li>
+                    <li>ECS</li>
+                    <li>C++ Reflection (No RTTI)</li>
+                    <li>Asset manager</li>
+                    <li>Physics system</li>
+                    <li>3D audio (OpenAL)</li>
+                    <li>User-friendly visual scripting framework (Property system)</li>
+                    <li>Saving/Loading scenes (YAML)</li>
+                    <li>Built-in components Sprite/Font/Particle/Animation/Colliders... etc</li>
+                </ul>
+                
+                <p>
+                    Can be built as a full editor or as a standalone runtime. Page's standout feature is that it's completely hot reloadable, everything can be reloaded during runtime e.g.
+                    Textures, Audio, Shaders and even C++
+                </p>
+                
                 <video width="100%" height="100%" autoplay muted loop controls>
                     <source src="/res/CReload.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 
                 <p>Now this is a showcase of your standard run-of-the-mill entry points. Reloading a DLL that captures these functions
-                    isn't that hard. Simply export these function in C avoiding name-mangling. And use them in your executable after
-                    loading the DLL. PAGE_ONLY_EXPORT is the ubiqitous DLL exporting macro</p>
+                    isn't that hard. Simply export these Start/Update as C functions avoiding name-mangling. And use them in your executable after
+                    loading the DLL. "PAGE_ONLY_EXPORT" is the ubiquitous DLL exporting macro</p>
                 
-                <p>Where <strong>PageECS</strong> shines is how it manages components, it uses <strong>PageRegistry</strong> which is a Container agnostic registrar that
+                <p>Where <span class="tooltip"><u>PageECS</u><span class="tooltip-text">An extremely flexible ECS, which supports modern systems application design and also the classical OOP design.</span></span> shines is how it manages components, it uses
+                    <span class="tooltip"><u>PageRegistry</u><span class="tooltip-text">The absolute core of the Page framework, this is the tool that manages all of Page's data, it ensures safety across DLL/SO boundaries. It is also container agnostic meaning the user can provide his own container for managing data.</span></span> which is a Container agnostic registrar that
                     registers and deregisters, orders and retrieves your data between DLLs.
-                    This is also what <strong>AssetManager</strong> uses to safely retrieve Entities between DLLs.</p>
+                    This is also what AssetManager uses to safely retrieve Entities between DLLs.</p>
 
                 <p>A lot of these systems are worth talking about in detail as they solve minor issues that get lost in the bigger picture, such as identifying loaded DLLs,
                     managing/clearing DLL specific data, support for custom containers, identifying user components, handling existing assets between DLLs
                     (Overwriting/Retrieval)... etc, I'll reserve talking about these to keep this as conscise as possible.</p>
 
-                <p><strong>PageECS</strong> has support for systems and a modern ECS architecture. But in <strong>Page</strong> it's mostly used as a classical
-                    Component system (memory friendly, no inheritence)</p>
+                <p><span class="tooltip"><u>PageECS</u><span class="tooltip-text">An extremely flexible ECS, which supports modern systems application design and also the classical OOP design.</span></span> supports systems and a modern ECS architecture. But in
+                    <span class="tooltip"><u>Page</u><span class="tooltip-text">A completely reloadable native graphics engine written in C++ that can render arbitrary graphics on all modern platforms: Desktop/Mobile/Web.</span></span> it's mostly used as a classical Component system (memory friendly, no inheritance)</p>
 
                 <pre class="scrollable-code">
 <code class="language-cpp">
@@ -76,10 +98,10 @@ struct ExampleComponent
 
                 <P>Components are safely managed between DLLs and can be reloaded. This can be useful by itself but really a perfect use case for it, is in a visual editor, such as a game engine.</P>
 
-                <p>A common visual tool provided by game engines is a property field, such as Unreal's UPROPERTY.</P>
+                <p>A common visual tool provided by game engines is a property field.</P>
                 
-                <P><strong>Page</strong> has built-in support for member properties and lambda properties i.e.
-                defining custom getters/setters as functions, Both of these properties are built in and can be automatically serialized/deserialized for the Editor/Runtime when saving/loading scenes.
+                <P><span class="tooltip"><u>Page</u><span class="tooltip-text">A completely reloadable native graphics engine written in C++ that can render arbitrary graphics on all modern platforms: Desktop/Mobile/Web.</span></span> has built-in support for member properties and lambda properties i.e.
+                defining custom getters/setters as functions. Both of these properties are built in and can be automatically serialized/deserialized for the Editor/Runtime when saving/loading scenes.
                 This is what all of the components use to control parameters such as the Color in <strong>SpriteComponent</strong> and Position/Scale/Rotation in <strong>Transform</strong> component, etc.
                 Again I don't want to go too much into the weeds with this, as this is an involved detail of the engine, thankfully demonstrating it is easy</P>
                 
@@ -143,7 +165,7 @@ struct ExampleComponent
                     Your browser does not support the video tag.
                 </video>
 
-                <p>Tools like these paired with C++ the limits can get really really absurd. You end up with something magical</p>
+                <p>Tools like these paired with C++ the limits can get really absurd. You end up with something magical!</p>
                 <pre class="scrollable-code">
 <code class="language-cpp">                    
 AssetManager::Add&lt;Callback&lt;void, Button&amp;&gt;&gt;("ChangeColor",
@@ -160,7 +182,7 @@ AssetManager::Add&lt;Callback&lt;void, Button&amp;&gt;&gt;("ChangeColor",
                     Your browser does not support the video tag.
                 </video>
 
-                <p>You got yourself a dynamic visual C++ scripting langauge that is reloadable Node-RED style.
+                <p>You've got yourself a dynamic visual C++ scripting language that is reloadable Node-RED style.
                     More of a proof of concept at the moment. Obviously UI should be a selector which goes through all provided Callback functions,
                     for now this'll do for the demo.
                     More importantly the building blocks are there, if there ever was a desire. </p>
